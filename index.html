@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E1 - Sécurité scolaire</title>
+<style>
+* { box-sizing: border-box; font-family: Arial, sans-serif; }
+body { margin: 0; background: #f1f5f9; color: #172033; }
+header { background: #102a43; color: white; padding: 22px; text-align: center; }
+header h1 { margin: 0; font-size: 28px; }
+header p { margin: 6px 0 0; opacity: 0.8; }
+.container { max-width: 500px; margin: auto; padding: 20px; }
+.card { background: white; padding: 20px; border-radius: 18px; margin-bottom: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.07); }
+h2 { margin-top: 0; }
+button { width: 100%; padding: 15px; border: none; border-radius: 12px; margin-top: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+.primary { background: #1264d8; color: white; }
+.secondary { background: #e8f1ff; color: #1264d8; }
+input, select, textarea { width: 100%; padding: 13px; border: 1px solid #cbd5e1; border-radius: 10px; margin-top: 6px; margin-bottom: 15px; font-size: 15px; }
+textarea { height: 120px; }
+label { font-weight: bold; font-size: 14px; }
+.page { display: none; }
+.active { display: block; }
+.success { text-align: center; padding: 30px 10px; }
+.success-icon { font-size: 60px; }
+.incident { border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; margin-bottom: 10px; }
+.badge { display: inline-block; padding: 5px 9px; border-radius: 20px; font-size: 12px; font-weight: bold; background: #fff3cd; }
+.back { background: transparent; color: #1264d8; text-align: left; padding: 0; width: auto; }
+.warning { background: #fff3cd; border: 1px solid #f0d36b; border-radius: 12px; padding: 12px; font-size: 14px; margin-bottom: 15px; }
+.help a { display: block; background: #e8f1ff; color: #1264d8; text-decoration: none; font-weight: bold; padding: 12px; border-radius: 10px; margin-top: 8px; text-align: center; }
+footer { text-align: center; padding: 20px; color: #64748b; font-size: 12px; }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🛡️ E1</h1>
+    <p>Sécurité scolaire</p>
+</header>
+
+<div class="container">
+
+<!-- ACCUEIL -->
+<div id="home" class="page active">
+
+    <div class="warning">
+        ⚠️ <b>Prototype</b> : les signalements ne sont <b>pas transmis</b> à
+        l'établissement. Ils restent uniquement sur cet appareil.
+    </div>
+
+    <div class="card">
+        <h2>Bonjour 👋</h2>
+        <p>E1 permet aux élèves de signaler rapidement les situations pouvant menacer leur sécurité.</p>
+    </div>
+
+    <div class="card">
+        <button class="primary" onclick="showPage('report')">🚨 Signaler un incident</button>
+        <button class="secondary" onclick="showPage('history')">📋 Mes signalements</button>
+    </div>
+
+    <div class="card help">
+        <b>📞 Besoin d'aide maintenant ?</b>
+        <a href="tel:3020">3020 : harcèlement scolaire</a>
+        <a href="tel:3018">3018 : cyberharcèlement</a>
+        <a href="tel:112">112 : urgence</a>
+    </div>
+
+    <div class="card">
+        <b>🔒 Confidentialité</b>
+        <p>Un signalement peut être effectué anonymement.</p>
+    </div>
+
+</div>
+
+<!-- SIGNALER -->
+<div id="report" class="page">
+
+    <button class="back" onclick="showPage('home')">← Retour</button>
+
+    <div class="card">
+
+        <h2>🚨 Signaler un incident</h2>
+        <p>Décris les faits le plus clairement possible.</p>
+
+        <label>Type d'incident</label>
+        <select id="type">
+            <option>Harcèlement</option>
+            <option>Agression physique</option>
+            <option>Menace</option>
+            <option>Chantage</option>
+            <option>Intimidation</option>
+            <option>Cyberharcèlement</option>
+            <option>Autre</option>
+        </select>
+
+        <label>Lieu</label>
+        <input id="place" type="text" placeholder="Ex : cour, salle, cantine...">
+
+        <label>Description</label>
+        <textarea id="description" placeholder="Que s'est-il passé ?"></textarea>
+
+        <label>Niveau d'urgence</label>
+        <select id="priority">
+            <option>Normal</option>
+            <option>Important</option>
+            <option>Urgent</option>
+        </select>
+
+        <label>
+            <input type="checkbox" id="anonymous" checked style="width:auto">
+            Je souhaite rester anonyme
+        </label>
+
+        <button class="primary" onclick="sendReport()">🔒 Enregistrer le signalement</button>
+
+    </div>
+
+</div>
+
+<!-- CONFIRMATION -->
+<div id="success" class="page">
+
+    <div class="card success">
+        <div class="success-icon">✅</div>
+        <h2>Signalement enregistré</h2>
+        <p>
+            Il est sauvegardé sur cet appareil (prototype E1).
+            <b>Il n'a pas été envoyé à l'établissement.</b>
+            En cas de besoin, appelle le <b>3020</b>.
+        </p>
+        <button class="primary" onclick="showPage('home')">Retour à l'accueil</button>
+    </div>
+
+</div>
+
+<!-- HISTORIQUE -->
+<div id="history" class="page">
+
+    <button class="back" onclick="showPage('home')">← Retour</button>
+
+    <div class="card">
+        <h2>📋 Mes signalements</h2>
+        <div id="historyList">Aucun signalement pour le moment.</div>
+    </div>
+
+</div>
+
+</div>
+
+<footer>E1 — Prototype de sécurité scolaire</footer>
+
+<script>
+
+let reports = [];
+try {
+    reports = JSON.parse(localStorage.getItem("E1_reports")) || [];
+} catch (e) {
+    reports = [];
+}
+
+// Protège contre l'injection de code
+function esc(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+}
+
+function showPage(page) {
+    document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
+    document.getElementById(page).classList.add("active");
+    displayReports();
+}
+
+function sendReport() {
+    const type = document.getElementById("type").value;
+    const place = document.getElementById("place").value;
+    const description = document.getElementById("description").value;
+    const priority = document.getElementById("priority").value;
+    const anonymous = document.getElementById("anonymous").checked;
+
+    if (!description.trim()) {
+        alert("Veuillez décrire l'incident avant de l'enregistrer.");
+        return;
+    }
+
+    reports.unshift({
+        type: type,
+        place: place || "Non précisé",
+        description: description,
+        priority: priority,
+        anonymous: anonymous,
+        date: new Date().toLocaleString("fr-FR"),
+        status: "Nouveau"
+    });
+
+    try {
+        localStorage.setItem("E1_reports", JSON.stringify(reports));
+    } catch (e) {}
+
+    document.getElementById("place").value = "";
+    document.getElementById("description").value = "";
+
+    showPage("success");
+}
+
+function displayReports() {
+    const list = document.getElementById("historyList");
+
+    if (reports.length === 0) {
+        list.innerHTML = "Aucun signalement pour le moment.";
+        return;
+    }
+
+    list.innerHTML = "";
+
+    reports.forEach(report => {
+        const element = document.createElement("div");
+        element.className = "incident";
+        element.innerHTML = `
+            <b>${esc(report.type)}</b><br>
+            📍 ${esc(report.place)}<br>
+            🕐 ${esc(report.date)}<br>
+            ⚠️ ${esc(report.priority)}<br>
+            <p>${esc(report.description)}</p>
+            <span class="badge">${esc(report.status)}</span>
+        `;
+        list.appendChild(element);
+    });
+}
+
+displayReports();
+
+</script>
+
+</body>
+</html>
